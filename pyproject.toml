@@ -13,6 +13,7 @@ kaggle = "^1.6.6"
 polars = "^0.20.16"
 ipykernel = "^6.29.3"
 pygwalker = "^0.4.7"
+setuptools = "^69.2.0"
 
 
 [build-system]
