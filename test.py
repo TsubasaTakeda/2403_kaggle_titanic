@@ -23,8 +23,12 @@ post_params = {
 }
 
 valid_params = {
-    'lib_name': '', 
-    'params': {}
+    'lib_name': 'tools.validator.kfold', 
+    'params': {
+        'n_splits': 5, 
+        'shuffle': True, 
+        'random_state': 42
+    }
 }
 
 
@@ -52,6 +56,9 @@ params = {
 train_df = pl.read_csv('./data/train.csv')
 test_df = pl.read_csv('./data/test.csv')
 
+
 predictor = Predictor(params)
-result = predictor.predict(train_df, test_df)
+# result = predictor.predict(train_df, test_df)
+result = predictor.validate(train_df)
+
 print(result)
