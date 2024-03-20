@@ -4,10 +4,13 @@ from sklearn.preprocessing import OneHotEncoder
 
 class Preprocessor():
 
-    def __init__(self):
+    def __init__(self, params):
         self.pk_cols = ['PassengerId']
         self.num_cols = ['Age', 'SibSp', 'Parch', 'Fare']
         self.cat_cols = ['Pclass', 'Sex', 'Embarked']
+
+        self.feature_cols = ['Age', 'SibSp', 'Parch', 'Fare']
+        self.label_cols = ['Survived']
 
 
 
@@ -18,6 +21,7 @@ class Preprocessor():
         for i, col in enumerate(cols):
             for name in self.one_hot_encoder.categories_[i]:
                 self.one_hot_encoder_cols.append(f'{col}_{name}')
+                self.feature_cols.append(f'{col}_{name}')
         return self.one_hot_encoder
         
 
@@ -30,6 +34,11 @@ class Preprocessor():
 
 
 
+
+
+    def get_labels(self, train_df: pl.DataFrame) -> pl.DataFrame:
+        label_df = train_df[self.pk_cols + self.label_cols]
+        return label_df
 
     def fit(self, train_df: pl.DataFrame) -> pl.DataFrame:
         self._make_one_hot_encoder(train_df, self.cat_cols)
